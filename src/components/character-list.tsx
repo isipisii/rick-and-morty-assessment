@@ -13,7 +13,6 @@ export default function CharacterList() {
 	// filters  from url
 	const [gender] = useQueryState("gender", { defaultValue: "" });
 	const [status] = useQueryState("status", { defaultValue: "" });
-	const [searchTerm] = useQueryState("search", { defaultValue: "" });
 
 	const genderFilter = gender === "all" ? undefined : (gender as TCharacterQueryParams["gender"]);
 	const statusFilter = status === "all" ? undefined : (status as TCharacterQueryParams["status"]);
@@ -22,7 +21,6 @@ export default function CharacterList() {
 	const { data, isPending, isError, fetchNextPage, hasNextPage, refetch, isFetchingNextPage } = useGetCharacters({
 		...(genderFilter && { gender: genderFilter }),
 		...(statusFilter && { status: statusFilter }),
-		name: searchTerm,
 	});
 
 	const characters = data?.pages.flatMap((p) => p.results) ?? [];
@@ -50,7 +48,7 @@ export default function CharacterList() {
 	}
 
 	//  fallback when no results
-	if (characters.length === 0) {
+	if (characters.length === 0 && !isPending) {
 		return (
 			<Flex justify="center" align="center" h="60">
 				<Text fontSize="lg" color="gray.500">
