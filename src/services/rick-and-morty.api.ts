@@ -1,17 +1,8 @@
-import { TCharacter, TResponse } from "@/types";
+import { TCharacter, TCharacterQueryParams, TResponse } from "@/types";
 
 const BASE_URL = "https://rickandmortyapi.com/api";
 
-type TQueryParams = {
-	name?: string;
-	status?: "alive" | "dead" | "uknown";
-	species?: string;
-	type?: string;
-	gender?: "female" | "male" | "genderless" | "unknown";
-	page?: string;
-};
-
-export async function getCharacters(params: TQueryParams = {}) {
+export async function getCharacters(params: TCharacterQueryParams = {}) {
 	const url = new URL(`${BASE_URL}/character`);
 	url.search = new URLSearchParams(params).toString();
 
@@ -20,7 +11,6 @@ export async function getCharacters(params: TQueryParams = {}) {
 	});
 
 	const data = await res.json();
-	console.log(data);
 	return data as TResponse<TCharacter>;
 }
 

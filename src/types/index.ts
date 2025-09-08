@@ -8,6 +8,15 @@ export type TResponse<T> = {
 	results: T;
 };
 
+export type TCharacterQueryParams = {
+	name?: string;
+	status?: "alive" | "dead" | "uknown";
+	species?: string;
+	type?: string;
+	gender?: "female" | "male" | "genderless" | "unknown";
+	page?: string;
+};
+
 export type TCharacter = {
 	id: number;
 	name: string;
