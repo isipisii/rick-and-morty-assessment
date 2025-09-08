@@ -8,7 +8,7 @@ export function useGetCharacters(params: TCharacterQueryParams = {}) {
 	return useInfiniteQuery({
 		queryKey: [CHARACTERS_KEY, ...Object.values(params)],
 		initialPageParam: "1",
-		queryFn: ({ pageParam }) => getCharacters({ page: pageParam.toString(), ...params }),
+		queryFn: ({ pageParam, signal }) => getCharacters({ page: pageParam.toString(), ...params }, signal),
 		getNextPageParam: (lastPage) => {
 			if (!lastPage.info.next) return undefined;
 
