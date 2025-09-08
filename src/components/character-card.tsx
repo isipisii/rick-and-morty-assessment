@@ -1,5 +1,10 @@
+import { useFavorites } from "@/hooks/use-favorites";
 import { TCharacter } from "@/types";
-import { Flex, Stack, Heading, Text, Badge, Image, Card } from "@chakra-ui/react";
+import { Flex, Stack, Heading, Text, Badge, Image, Card, VStack } from "@chakra-ui/react";
+import { Button, HStack } from "@chakra-ui/react";
+import { BiHeart } from "react-icons/bi";
+import { BsArrowUpRight, BsArrowUpRightSquare } from "react-icons/bs";
+import { RiArrowRightLine, RiMailLine } from "react-icons/ri";
 
 const getStatusColor = (status: string) => {
 	switch (status) {
@@ -17,6 +22,12 @@ type TProps = {
 };
 
 export default function CharacterCard({ character }: TProps) {
+	const { isFavorite, toggleFavorite } = useFavorites();
+
+	function handleToggleFavorite() {
+		toggleFavorite(character.id);
+	}
+
 	return (
 		<Card.Root
 			maxW="350px"
@@ -48,9 +59,23 @@ export default function CharacterCard({ character }: TProps) {
 			</Card.Body>
 
 			<Card.Footer>
-				<Text fontSize="xs" color="blue.400" truncate>
-					Origin: {character.origin.name}
-				</Text>
+				<VStack gap="2" alignItems="start" w="full">
+					<Text fontSize="xs" color="blue.400" truncate>
+						Origin: {character.origin.name}
+					</Text>
+
+					<HStack w="full">
+						{/* Expands to fill available space */}
+						<Button colorPalette="teal" variant="solid" flex="1">
+							View <RiArrowRightLine />
+						</Button>
+
+						{/* Shrinks to fit its content */}
+						<Button colorPalette="red" onClick={handleToggleFavorite} variant={isFavorite(character.id) ? "solid" : "outline"}>
+							<BiHeart />
+						</Button>
+					</HStack>
+				</VStack>
 			</Card.Footer>
 		</Card.Root>
 	);
