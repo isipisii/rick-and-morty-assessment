@@ -1,15 +1,11 @@
 "use client";
 
-import { Input, InputGroup, HStack } from "@chakra-ui/react";
-import { LuSearch } from "react-icons/lu";
+import { HStack } from "@chakra-ui/react";
 import { ColorModeButton } from "./ui/color-mode";
 import { useQueryState } from "nuqs";
 import FilterSelect from "./ui/filter-select";
 
 export default function CharactersToolbar() {
-	const [searchTerm, setSearchTerm] = useQueryState("search", {
-		defaultValue: "",
-	});
 	const [gender, setGender] = useQueryState("gender", {
 		defaultValue: "",
 	});
@@ -32,16 +28,6 @@ export default function CharactersToolbar() {
 		>
 			<ColorModeButton />
 			<HStack>
-				{/* Search Input */}
-				<InputGroup flex="1" startElement={<LuSearch />}>
-					<Input
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)}
-						placeholder="Search characters..."
-						aria-label="Search characters"
-					/>
-				</InputGroup>
-
 				{/* Gender Filter */}
 				<FilterSelect
 					value={gender}
