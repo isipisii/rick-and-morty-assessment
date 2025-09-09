@@ -10,10 +10,11 @@ type EpisodeListProps = {
 
 export default function EpisodeList({ ids }: EpisodeListProps) {
 	const { data } = useGetEpisodes(ids.join(","));
-
+	const episodes = Array.isArray(data) ? data : [data];
+    
 	return (
 		<SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={6} mt={4}>
-			{data.map((ep) => (
+			{episodes.map((ep) => (
 				<EpisodeCard key={ep.id} episode={ep} />
 			))}
 		</SimpleGrid>
