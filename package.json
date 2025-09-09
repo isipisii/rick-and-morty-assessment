@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "rick-and-morty",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,9 +8,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.26.0",
+    "@emotion/react": "^11.14.0",
+    "@tanstack/react-query": "^5.87.1",
+    "@tanstack/react-query-devtools": "^5.87.1",
+    "@tanstack/react-virtual": "^3.13.12",
+    "next": "15.5.2",
+    "next-themes": "^0.4.6",
+    "nuqs": "^2.6.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.2"
+    "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0"
   },
   "devDependencies": {
     "typescript": "^5",
