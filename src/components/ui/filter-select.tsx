@@ -22,7 +22,7 @@ export default function FilterSelect({ placeholder, items, value, setValue }: Fi
 			<Select.HiddenSelect />
 			<Select.Control>
 				<Select.Trigger>
-					<Select.ValueText placeholder={placeholder} />
+					<Select.ValueText color={{ base: "black", _dark: "white" }} placeholder={placeholder} />
 				</Select.Trigger>
 				<Select.IndicatorGroup>
 					<Select.Indicator />
@@ -32,7 +32,7 @@ export default function FilterSelect({ placeholder, items, value, setValue }: Fi
 				<Select.Positioner>
 					<Select.Content>
 						{collection.items.map((item) => (
-							<Select.Item key={item.value} item={item}>
+							<Select.Item key={item.value} item={item} color={{ base: "black", _dark: "white" }}>
 								{item.label}
 								<Select.ItemIndicator />
 							</Select.Item>
