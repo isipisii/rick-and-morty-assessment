@@ -8,19 +8,24 @@ import CharacterSkeletons from "./character-skeletons";
 import { useInView } from "react-intersection-observer";
 import { useQueryState } from "nuqs";
 import { TCharacterQueryParams } from "@/types";
+import { useDebounce } from "@/hooks/use-debounce";
 
 export default function CharacterList() {
 	// filters  from url
+	const [name] = useQueryState("name", { defaultValue: "" });
 	const [gender] = useQueryState("gender", { defaultValue: "" });
 	const [status] = useQueryState("status", { defaultValue: "" });
+
+	const debouncedName = useDebounce(name, 300);
 
 	const genderFilter = gender === "all" ? undefined : (gender as TCharacterQueryParams["gender"]);
 	const statusFilter = status === "all" ? undefined : (status as TCharacterQueryParams["status"]);
 
 	const { ref: inViewRef, inView } = useInView();
-	const { data, isPending, isError, fetchNextPage, hasNextPage, refetch, isFetchingNextPage } = useGetCharacters({
+	const { data, isPending, isError, fetchNextPage, hasNextPage, refetch, isFetchingNextPage, error } = useGetCharacters({
 		...(genderFilter && { gender: genderFilter }),
 		...(statusFilter && { status: statusFilter }),
+		name: debouncedName,
 	});
 
 	const characters = data?.pages.flatMap((p) => p.results) ?? [];
@@ -32,12 +37,14 @@ export default function CharacterList() {
 		}
 	}, [hasNextPage, inView, isFetchingNextPage, fetchNextPage]);
 
+	console.log(error?.message);
+
 	if (isError) {
 		return (
 			<Flex justify="center" align="center" h="60">
 				<Stack gap="4" align="center">
 					<Text color="red.400" fontWeight="medium">
-						Failed to load characters.
+						{error?.message || "Failed to load characters."}
 					</Text>
 					<Button onClick={() => refetch()} colorScheme="blue">
 						Retry
