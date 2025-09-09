@@ -1,34 +1,24 @@
 import { useLocalStorage } from "./use-local-storage";
-import { toaster } from "@/components/ui/toaster";
+
+import type { TCharacter } from "@/types";
 
 export function useFavorites() {
-	const [favorites, setFavorites] = useLocalStorage<number[]>("favorites-id", []);
+	const [favorites, setFavorites] = useLocalStorage<TCharacter[]>("favorites", []);
 
-	const isFavorite = (characterId: number) => favorites.includes(characterId);
+	const isFavorite = (id: number) => favorites.some((character) => character.id === id);
 
-	const addFavorite = (characterId: number) => {
-		setFavorites((prev) => {
-			if (prev.includes(characterId)) return prev; // avoid duplicates
-			return [...prev, characterId];
-		});
-
-		toaster.create({
-			description: "Added from favorites",
-			type: "success",
-		});
+	const addFavorite = (character: TCharacter) => {
+		if (!isFavorite(character.id)) {
+			setFavorites([...favorites, character]);
+		}
 	};
 
-	const removeFavorite = (characterId: number) => {
-		setFavorites((prev) => prev.filter((id) => id !== characterId));
-
-		toaster.create({
-			description: "Removed from favorites",
-			type: "info",
-		});
+	const removeFavorite = (id: number) => {
+		setFavorites(favorites.filter((c) => c.id !== id));
 	};
 
-	const toggleFavorite = (characterId: number) => {
-		setFavorites((prev) => (prev.includes(characterId) ? prev.filter((id) => id !== characterId) : [...prev, characterId]));
+	const toggleFavorite = (character: TCharacter) => {
+		isFavorite(character.id) ? removeFavorite(character.id) : addFavorite(character);
 	};
 
 	return { favorites, addFavorite, removeFavorite, toggleFavorite, isFavorite };
