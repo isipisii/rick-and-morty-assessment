@@ -38,7 +38,7 @@ export type TCharacter = {
 	created: string;
 };
 
-export type TRickAndMortyEpisode = {
+export type TEpisode = {
 	id: number;
 	name: string;
 	air_date: string;

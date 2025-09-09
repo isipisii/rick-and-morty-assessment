@@ -1,6 +1,20 @@
-import { TCharacter, TCharacterQueryParams, TResponse } from "@/types";
+import { TCharacter, TCharacterQueryParams, TEpisode, TResponse } from "@/types";
 
 const BASE_URL = "https://rickandmortyapi.com/api";
+
+// characters
+export async function getCharacter(id: string, signal?: AbortSignal) {
+	const res = await fetch(`${BASE_URL}/character/${id}`, {
+		method: "GET",
+		signal,
+	});
+
+	if (res.status === 404) throw new Error("Character not found");
+	if (!res.ok) throw new Error("Failed to fetch characters");
+
+	const data = await res.json();
+	return data as TCharacter;
+}
 
 // characters
 export async function getCharacters(params: TCharacterQueryParams = {}, signal?: AbortSignal) {
@@ -16,12 +30,12 @@ export async function getCharacters(params: TCharacterQueryParams = {}, signal?:
 	if (!res.ok) throw new Error("Failed to fetch characters");
 
 	const data = await res.json();
-	return data as TResponse<TCharacter>;
+	return data as TResponse<TCharacter[]>;
 }
 
 // episodes
-export async function getEpisodes(signal?: AbortSignal) {
-	const res = await fetch(`${BASE_URL}/episode`, {
+export async function getEpisodes(ids: string, signal?: AbortSignal) {
+	const res = await fetch(`${BASE_URL}/episode/${ids}`, {
 		method: "GET",
 		signal,
 	});
@@ -29,12 +43,12 @@ export async function getEpisodes(signal?: AbortSignal) {
 	if (!res.ok) throw new Error("Failed to fetch episodes");
 
 	const data = await res.json();
-	return data;
+	return data as TEpisode[];
 }
 
 // locations
-export async function getLocations(signal?: AbortSignal) {
-	const res = await fetch(`${BASE_URL}/location`, {
+export async function getLocations(ids: string, signal?: AbortSignal) {
+	const res = await fetch(`${BASE_URL}/location/${ids}`, {
 		method: "GET",
 		signal,
 	});
