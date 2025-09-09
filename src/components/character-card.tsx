@@ -3,8 +3,8 @@ import { TCharacter } from "@/types";
 import { Flex, Stack, Heading, Text, Badge, Image, Card, VStack } from "@chakra-ui/react";
 import { Button, HStack } from "@chakra-ui/react";
 import { BiHeart } from "react-icons/bi";
-import { BsArrowUpRight, BsArrowUpRightSquare } from "react-icons/bs";
-import { RiArrowRightLine, RiMailLine } from "react-icons/ri";
+import { RiArrowRightLine } from "react-icons/ri";
+import { toaster } from "./ui/toaster";
 
 const getStatusColor = (status: string) => {
 	switch (status) {
@@ -23,9 +23,21 @@ type TProps = {
 
 export default function CharacterCard({ character }: TProps) {
 	const { isFavorite, toggleFavorite } = useFavorites();
+	const isFavoriteCharacter = isFavorite(character.id);
 
 	function handleToggleFavorite() {
-		toggleFavorite(character.id);
+		toggleFavorite(character);
+
+		if (isFavoriteCharacter) {
+			toaster.create({
+				description: "Removed from favorites",
+				type: "info",
+			});
+		} else
+			toaster.create({
+				description: "Added to favorites",
+				type: "success",
+			});
 	}
 
 	return (
@@ -71,7 +83,7 @@ export default function CharacterCard({ character }: TProps) {
 						</Button>
 
 						{/* Shrinks to fit its content */}
-						<Button colorPalette="red" onClick={handleToggleFavorite} variant={isFavorite(character.id) ? "solid" : "outline"}>
+						<Button colorPalette="red" onClick={handleToggleFavorite} variant={isFavoriteCharacter ? "solid" : "outline"}>
 							<BiHeart />
 						</Button>
 					</HStack>
