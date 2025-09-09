@@ -2,11 +2,9 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCharacters } from "@/services/rick-and-morty.api";
 import { TCharacterQueryParams } from "@/types";
 
-const CHARACTERS_KEY = "CHARACTERS";
-
 export function useGetCharacters(params: TCharacterQueryParams = {}) {
 	return useInfiniteQuery({
-		queryKey: [CHARACTERS_KEY, ...Object.values(params)],
+		queryKey: ["characters", ...Object.values(params)],
 		initialPageParam: "1",
 		queryFn: ({ pageParam, signal }) => getCharacters({ page: pageParam.toString(), ...params }, signal),
 		getNextPageParam: (lastPage) => {
