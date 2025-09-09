@@ -12,6 +12,7 @@ export async function getCharacters(params: TCharacterQueryParams = {}, signal?:
 		signal,
 	});
 
+	if (res.status === 404) throw new Error("Character not found");
 	if (!res.ok) throw new Error("Failed to fetch characters");
 
 	const data = await res.json();
