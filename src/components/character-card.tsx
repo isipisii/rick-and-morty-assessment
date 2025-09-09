@@ -5,6 +5,7 @@ import { Button, HStack } from "@chakra-ui/react";
 import { BiHeart } from "react-icons/bi";
 import { RiArrowRightLine } from "react-icons/ri";
 import { toaster } from "./ui/toaster";
+import Link from "next/link";
 
 const getStatusColor = (status: string) => {
 	switch (status) {
@@ -77,9 +78,10 @@ export default function CharacterCard({ character }: TProps) {
 					</Text>
 
 					<HStack w="full">
-						{/* Expands to fill available space */}
-						<Button colorPalette="teal" variant="solid" flex="1">
-							View <RiArrowRightLine />
+						<Button asChild colorScheme="teal" variant="solid" flex="1">
+							<Link href={`/character/${character.id}`}>
+								View <RiArrowRightLine />
+							</Link>
 						</Button>
 
 						{/* Shrinks to fit its content */}
