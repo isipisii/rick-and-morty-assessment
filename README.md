@@ -10,8 +10,8 @@ This project uses **Next.js**, **TypeScript** and **Bun** for a fast and efficie
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-    cd your-repo-name
+    git clone https://github.com/isipisii/rick-and-morty-assessment
+    cd rick-and-morty-assessment
     ```
 2.  **Install dependencies:**
     ```bash
@@ -31,7 +31,7 @@ The application is structured to be scalable and maintainable, following best pr
 
 * **File Structure**: The project uses a feature-based file structure. Components related to a specific feature (e.g., `character-card.tsx`, `character-details.tsx`) are grouped under the `components` directory. This promotes a clear separation of concerns and makes it easy to locate and work on specific parts of the application.
 * **State Management**: Instead of a heavy state manager, the application leverages **TanStack Query** for server state management and **React Hooks** for client-side state. This was a deliberate choice to keep the dependency footprint minimal and purposeful. TanStack Query handles data fetching, caching, and background synchronization, while custom hooks like `use-local-storage.ts` manage the favorites list, providing a clean abstraction for interacting with `localStorage`.
-* **URL as Source of Truth**: The search and filter parameters are synchronized with the URL using the `useRouter` hook from Next.js. This ensures that the application state is directly reflected in the URL, making it shareable and reload-safe. Navigating back and forth in the browser history correctly restores the previous list state.
+* **URL as Source of Truth**: The search and filter parameters are synchronized with the URL using the `nuqs` library. This ensures that the application state is directly reflected in the URL, making it shareable and reload-safe. Navigating back and forth in the browser history correctly restores the previous list state.
 * **Request Cancellation**: The `use-debounce.ts` hook, in combination with TanStack Query's built-in cancellation, handles the "abort on change" requirement. When a user types, a new request is debounced, and any pending previous requests are automatically canceled to prevent race conditions and ensure the displayed data is always fresh.
 * **Styling**: **Chakra UI** was chosen for its component-based styling system and built-in accessibility features. This allowed for rapid UI development and ensured a consistent design without the need for custom CSS from scratch.
 
