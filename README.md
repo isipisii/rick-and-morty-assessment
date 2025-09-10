@@ -50,3 +50,4 @@ Given more time, here are a few features and improvements I would prioritize, in
 3.  **List of Favorites**: I'd implement the list of favorite characters from the persistent storage.
 4.  **Unit and E2E Testing**: I would write a few basic tests to ensure the core fun
 5.  **Virtualization**: I would implement virtualization to ensure that it is still optimize regardless of how much characters are being rendered.
+6.  **Great UI/UX**: I would implement a visually appealing and offer a great user experience that is aligned with the theme of rick and morty.
